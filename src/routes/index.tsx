@@ -4,13 +4,14 @@ import { motion } from "motion/react";
 import { ArrowRight, Calendar, Heart, MapPin, Sprout, ShoppingBag, Search, Package, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HerbCard } from "@/components/site/HerbCard";
-import heroAsset from "@/assets/parijaat-nursery-gate-2.jpg.asset.json";
-const heroImg = heroAsset.url;
+import { SafeImage } from "@/components/site/SafeImage";
 import flatlay from "@/assets/herbs-flatlay.jpg";
-import { growers } from "@/data/mock";
 import { useEffect, useState } from "react";
 import { fetchHerbs, fetchSuppliers } from "@/lib/queries";
 import type { Herb, Supplier } from "@/lib/types";
+
+const HERO_IMG =
+  "https://xhcuktgdjhebxekgxzqp.supabase.co/storage/v1/object/sign/supplier-images/seed/parijaat-nursery-gate-2.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81YzViOWExNi05M2RhLTQ3OGUtYjlhMy0xNTNjMTJmZmQ2YTIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJzdXBwbGllci1pbWFnZXMvc2VlZC9wYXJpamFhdC1udXJzZXJ5LWdhdGUtMi5qcGciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg0MDYxMzA0LCJleHAiOjIwOTk0MjEzMDR9.GU9GH2iwqC4wfdTl6SQY3wfS0RjnLEn7mt35wK6kFMI";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -25,7 +26,7 @@ function Home() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden bloom-gradient">
-        <img src={heroImg} alt="" aria-hidden className="pointer-events-none absolute inset-y-0 right-0 hidden h-full w-2/3 object-cover opacity-90 md:block" />
+        <SafeImage src={HERO_IMG} alt="" aria-hidden className="pointer-events-none absolute inset-y-0 right-0 hidden h-full w-2/3 object-cover opacity-90 md:block" />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/10" />
         <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 md:py-28 lg:py-32">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="max-w-2xl">
@@ -126,7 +127,7 @@ function Home() {
       {/* Founder story */}
       <section className="mx-auto grid max-w-7xl gap-12 px-4 py-24 sm:px-6 md:grid-cols-2 md:items-center">
         <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="relative aspect-[5/4] overflow-hidden rounded-[2.5rem]">
-          <img src={flatlay} alt="Assorted potted herbs" loading="lazy" className="h-full w-full object-cover" />
+          <SafeImage src={flatlay} alt="Assorted potted herbs" loading="lazy" className="h-full w-full object-cover" />
           <div className="absolute -bottom-4 -right-4 hidden rounded-3xl border bg-card/90 p-4 shadow-lg backdrop-blur sm:block">
             <p className="font-display text-2xl font-semibold">2,000+</p>
             <p className="text-xs text-muted-foreground">home gardeners started</p>
@@ -154,17 +155,17 @@ function Home() {
             <h2 className="mt-2 font-display text-4xl font-semibold sm:text-5xl">The people behind every plant.</h2>
           </div>
           <div className="grid gap-6 md:grid-cols-2">
-            {growers.map((g, i) => (
-              <motion.figure key={g.name} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
+            {suppliers.slice(0, 3).map((s, i) => (
+              <motion.figure key={s.id} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
                 className="grid gap-5 rounded-3xl border bg-card p-6 shadow-sm md:grid-cols-[140px_1fr] md:items-center">
                 <div className="h-32 w-32 overflow-hidden rounded-2xl md:h-full md:w-full">
-                  <img src={g.image} alt={g.name} loading="lazy" className="h-full w-full object-cover" />
+                  <SafeImage src={s.image_url} alt={s.name} loading="lazy" className="h-full w-full object-cover" />
                 </div>
                 <div>
-                  <blockquote className="text-sm leading-relaxed text-muted-foreground">"{g.quote}"</blockquote>
+                  <blockquote className="text-sm leading-relaxed text-muted-foreground">"{s.about}"</blockquote>
                   <figcaption className="mt-4">
-                    <p className="font-display font-semibold">{g.name}</p>
-                    <p className="text-xs text-muted-foreground">{g.role} · {g.nursery} · {g.city}</p>
+                    <p className="font-display font-semibold">{s.name}</p>
+                    <p className="text-xs text-muted-foreground">Grower · {s.city}</p>
                   </figcaption>
                 </div>
               </motion.figure>

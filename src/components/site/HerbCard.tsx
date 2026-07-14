@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { Herb, Supplier } from "@/lib/types";
 import { resolveHerbImage } from "@/lib/images";
+import { SafeImage } from "@/components/site/SafeImage";
 
 export function HerbCard({ herb, supplier, index = 0 }: { herb: Herb; supplier?: Supplier | null; index?: number }) {
   return (
@@ -16,7 +17,7 @@ export function HerbCard({ herb, supplier, index = 0 }: { herb: Herb; supplier?:
       className="group flex flex-col overflow-hidden rounded-3xl border bg-card shadow-sm transition-shadow hover:shadow-xl"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
-        <img src={resolveHerbImage(herb.image_url, herb.slug)} alt={herb.name} loading="lazy"
+        <SafeImage src={resolveHerbImage(herb.image_url, herb.slug)} alt={herb.name} loading="lazy"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
         <div className="absolute left-3 top-3 flex gap-1.5">
           <Badge variant="secondary" className="rounded-full bg-background/85 backdrop-blur">{herb.availability}</Badge>
