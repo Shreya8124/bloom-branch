@@ -48,9 +48,9 @@ function Home() {
               </Button>
             </div>
             <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted-foreground">
-              <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-primary" /> 100+ nurseries</span>
-              <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-primary" /> 500+ herbs listed</span>
-              <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-primary" /> Pay at pickup</span>
+              <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-primary" /> 3 Verified Nursery Partners</span>
+              <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-primary" /> Kitchen Herb Collection</span>
+              <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-primary" /> Appointment Booking Available</span>
             </div>
           </motion.div>
         </div>

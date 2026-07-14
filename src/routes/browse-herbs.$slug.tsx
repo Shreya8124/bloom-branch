@@ -55,7 +55,9 @@ function HerbDetail() {
           <h1 className="mt-4 font-display text-5xl font-semibold">{herb.name}</h1>
           {herb.local && <p className="mt-1 text-lg text-muted-foreground">{herb.local}</p>}
           <p className="mt-4 text-muted-foreground">{herb.description}</p>
-          <p className="mt-6 font-display text-4xl font-semibold text-primary">₹{herb.price}</p>
+          <p className="mt-6 inline-flex items-center rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+            Available at Partner Nursery
+          </p>
           {nursery && (
             <div className="mt-6 rounded-2xl border bg-card p-4">
               <p className="text-xs uppercase tracking-widest text-muted-foreground">Grown at</p>
