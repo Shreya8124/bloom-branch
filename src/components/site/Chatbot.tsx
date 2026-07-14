@@ -159,7 +159,7 @@ export function Chatbot() {
                         )}
                       >
                         {m.role === "assistant" ? (
-                          <div className="prose prose-sm max-w-none prose-p:my-1 prose-ul:my-1 prose-ol:my-1 prose-li:my-0 prose-headings:my-1 dark:prose-invert">
+                          <div className="space-y-1 [&_a]:text-primary [&_a]:underline [&_code]:rounded [&_code]:bg-background/60 [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-xs [&_ol]:ml-4 [&_ol]:list-decimal [&_p]:my-1 [&_strong]:font-semibold [&_ul]:ml-4 [&_ul]:list-disc">
                             <ReactMarkdown>{m.content}</ReactMarkdown>
                           </div>
                         ) : (
