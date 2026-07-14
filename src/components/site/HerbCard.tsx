@@ -24,13 +24,11 @@ export function HerbCard({ herb, supplier, index = 0 }: { herb: Herb; supplier?:
         </div>
       </div>
       <div className="flex flex-1 flex-col gap-3 p-5">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <h3 className="truncate font-display text-lg font-semibold">{herb.name}</h3>
-            {herb.local && <p className="truncate text-xs text-muted-foreground">{herb.local}</p>}
-          </div>
-          <p className="shrink-0 font-display text-lg font-semibold text-primary">₹{herb.price}</p>
+        <div className="min-w-0">
+          <h3 className="truncate font-display text-lg font-semibold">{herb.name}</h3>
+          {herb.local && <p className="truncate text-xs text-muted-foreground">{herb.local}</p>}
         </div>
+        <p className="text-xs font-medium text-primary">Available at Partner Nursery</p>
         {supplier && (
           <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <MapPin className="h-3.5 w-3.5" />
