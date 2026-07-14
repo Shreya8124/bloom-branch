@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import fallback from "@/assets/herbs-flatlay.jpg";
 
-type Props = React.ImgHTMLAttributes<HTMLImageElement> & {
+type Props = Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src"> & {
   src?: string | null;
   fallbackSrc?: string;
 };
