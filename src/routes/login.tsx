@@ -1,11 +1,12 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
+import { Sprout } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Sprout } from "lucide-react";
-import { setUser } from "@/lib/auth";
+import { supabase } from "@/integrations/supabase/client";
+import { fetchSupplierByUserId } from "@/lib/queries";
 
 export const Route = createFileRoute("/login")({
   head: () => ({ meta: [{ title: "Login — KitchenBloom" }, { name: "description", content: "Log into your KitchenBloom account." }] }),
@@ -14,13 +15,18 @@ export const Route = createFileRoute("/login")({
 
 function Login() {
   const nav = useNavigate();
-  const [form, setForm] = useState({ email: "", password: "", role: "supplier" as "customer" | "supplier" });
-  const submit = (e: FormEvent) => {
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [busy, setBusy] = useState(false);
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
     if (!form.email || !form.password) return toast.error("Enter your email and password.");
-    setUser({ role: form.role, email: form.email, name: form.email.split("@")[0], nursery: form.role === "supplier" ? "Your Nursery" : undefined });
+    setBusy(true);
+    const { data, error } = await supabase.auth.signInWithPassword({ email: form.email, password: form.password });
+    setBusy(false);
+    if (error) return toast.error(error.message);
     toast.success("Welcome back!");
-    nav({ to: form.role === "supplier" ? "/supplier" : "/" });
+    const supplier = data.user ? await fetchSupplierByUserId(data.user.id) : null;
+    nav({ to: supplier ? "/supplier" : "/" });
   };
   return (
     <div className="mx-auto grid min-h-[70vh] max-w-md place-items-center px-4 py-16">
@@ -31,13 +37,7 @@ function Login() {
         <form onSubmit={submit} className="mt-6 grid gap-3">
           <div className="grid gap-1.5"><Label htmlFor="lemail">Email</Label><Input id="lemail" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></div>
           <div className="grid gap-1.5"><Label htmlFor="lpass">Password</Label><Input id="lpass" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} /></div>
-          <div className="flex gap-2 rounded-full bg-secondary p-1 text-xs font-medium">
-            {(["customer","supplier"] as const).map((r) => (
-              <button type="button" key={r} onClick={() => setForm({ ...form, role: r })}
-                className={`flex-1 rounded-full py-1.5 capitalize ${form.role === r ? "bg-background shadow-sm" : "text-muted-foreground"}`}>{r}</button>
-            ))}
-          </div>
-          <Button type="submit" className="mt-2 rounded-full">Log in</Button>
+          <Button type="submit" disabled={busy} className="mt-2 rounded-full">{busy ? "Signing in…" : "Log in"}</Button>
           <p className="text-center text-xs text-muted-foreground">No account? <Link to="/signup" className="underline">Sign up</Link></p>
         </form>
       </div>
