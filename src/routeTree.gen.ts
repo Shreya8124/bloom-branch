@@ -9,38 +9,361 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as PlantCareRouteImport } from './routes/plant-care'
+import { Route as NurseriesRouteImport } from './routes/nurseries'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as FaqsRouteImport } from './routes/faqs'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as BrowseHerbsRouteImport } from './routes/browse-herbs'
+import { Route as BecomeASupplierRouteImport } from './routes/become-a-supplier'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BrowseHerbsIndexRouteImport } from './routes/browse-herbs.index'
+import { Route as BrowseHerbsSlugRouteImport } from './routes/browse-herbs.$slug'
+import { Route as AuthenticatedSupplierRouteImport } from './routes/_authenticated/supplier'
+import { Route as AuthenticatedSupplierIndexRouteImport } from './routes/_authenticated/supplier.index'
+import { Route as AuthenticatedSupplierProfileRouteImport } from './routes/_authenticated/supplier.profile'
+import { Route as AuthenticatedSupplierHerbsRouteImport } from './routes/_authenticated/supplier.herbs'
+import { Route as AuthenticatedSupplierBookingsRouteImport } from './routes/_authenticated/supplier.bookings'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlantCareRoute = PlantCareRouteImport.update({
+  id: '/plant-care',
+  path: '/plant-care',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NurseriesRoute = NurseriesRouteImport.update({
+  id: '/nurseries',
+  path: '/nurseries',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqsRoute = FaqsRouteImport.update({
+  id: '/faqs',
+  path: '/faqs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrowseHerbsRoute = BrowseHerbsRouteImport.update({
+  id: '/browse-herbs',
+  path: '/browse-herbs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BecomeASupplierRoute = BecomeASupplierRouteImport.update({
+  id: '/become-a-supplier',
+  path: '/become-a-supplier',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BrowseHerbsIndexRoute = BrowseHerbsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BrowseHerbsRoute,
+} as any)
+const BrowseHerbsSlugRoute = BrowseHerbsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BrowseHerbsRoute,
+} as any)
+const AuthenticatedSupplierRoute = AuthenticatedSupplierRouteImport.update({
+  id: '/supplier',
+  path: '/supplier',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSupplierIndexRoute =
+  AuthenticatedSupplierIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedSupplierRoute,
+  } as any)
+const AuthenticatedSupplierProfileRoute =
+  AuthenticatedSupplierProfileRouteImport.update({
+    id: '/profile',
+    path: '/profile',
+    getParentRoute: () => AuthenticatedSupplierRoute,
+  } as any)
+const AuthenticatedSupplierHerbsRoute =
+  AuthenticatedSupplierHerbsRouteImport.update({
+    id: '/herbs',
+    path: '/herbs',
+    getParentRoute: () => AuthenticatedSupplierRoute,
+  } as any)
+const AuthenticatedSupplierBookingsRoute =
+  AuthenticatedSupplierBookingsRouteImport.update({
+    id: '/bookings',
+    path: '/bookings',
+    getParentRoute: () => AuthenticatedSupplierRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/become-a-supplier': typeof BecomeASupplierRoute
+  '/browse-herbs': typeof BrowseHerbsRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/faqs': typeof FaqsRoute
+  '/login': typeof LoginRoute
+  '/nurseries': typeof NurseriesRoute
+  '/plant-care': typeof PlantCareRoute
+  '/privacy': typeof PrivacyRoute
+  '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/supplier': typeof AuthenticatedSupplierRouteWithChildren
+  '/browse-herbs/$slug': typeof BrowseHerbsSlugRoute
+  '/browse-herbs/': typeof BrowseHerbsIndexRoute
+  '/supplier/bookings': typeof AuthenticatedSupplierBookingsRoute
+  '/supplier/herbs': typeof AuthenticatedSupplierHerbsRoute
+  '/supplier/profile': typeof AuthenticatedSupplierProfileRoute
+  '/supplier/': typeof AuthenticatedSupplierIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/become-a-supplier': typeof BecomeASupplierRoute
+  '/contact': typeof ContactRoute
+  '/faqs': typeof FaqsRoute
+  '/login': typeof LoginRoute
+  '/nurseries': typeof NurseriesRoute
+  '/plant-care': typeof PlantCareRoute
+  '/privacy': typeof PrivacyRoute
+  '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/browse-herbs/$slug': typeof BrowseHerbsSlugRoute
+  '/browse-herbs': typeof BrowseHerbsIndexRoute
+  '/supplier/bookings': typeof AuthenticatedSupplierBookingsRoute
+  '/supplier/herbs': typeof AuthenticatedSupplierHerbsRoute
+  '/supplier/profile': typeof AuthenticatedSupplierProfileRoute
+  '/supplier': typeof AuthenticatedSupplierIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/about': typeof AboutRoute
+  '/become-a-supplier': typeof BecomeASupplierRoute
+  '/browse-herbs': typeof BrowseHerbsRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/faqs': typeof FaqsRoute
+  '/login': typeof LoginRoute
+  '/nurseries': typeof NurseriesRoute
+  '/plant-care': typeof PlantCareRoute
+  '/privacy': typeof PrivacyRoute
+  '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/_authenticated/supplier': typeof AuthenticatedSupplierRouteWithChildren
+  '/browse-herbs/$slug': typeof BrowseHerbsSlugRoute
+  '/browse-herbs/': typeof BrowseHerbsIndexRoute
+  '/_authenticated/supplier/bookings': typeof AuthenticatedSupplierBookingsRoute
+  '/_authenticated/supplier/herbs': typeof AuthenticatedSupplierHerbsRoute
+  '/_authenticated/supplier/profile': typeof AuthenticatedSupplierProfileRoute
+  '/_authenticated/supplier/': typeof AuthenticatedSupplierIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/become-a-supplier'
+    | '/browse-herbs'
+    | '/contact'
+    | '/faqs'
+    | '/login'
+    | '/nurseries'
+    | '/plant-care'
+    | '/privacy'
+    | '/signup'
+    | '/sitemap.xml'
+    | '/supplier'
+    | '/browse-herbs/$slug'
+    | '/browse-herbs/'
+    | '/supplier/bookings'
+    | '/supplier/herbs'
+    | '/supplier/profile'
+    | '/supplier/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/become-a-supplier'
+    | '/contact'
+    | '/faqs'
+    | '/login'
+    | '/nurseries'
+    | '/plant-care'
+    | '/privacy'
+    | '/signup'
+    | '/sitemap.xml'
+    | '/browse-herbs/$slug'
+    | '/browse-herbs'
+    | '/supplier/bookings'
+    | '/supplier/herbs'
+    | '/supplier/profile'
+    | '/supplier'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/about'
+    | '/become-a-supplier'
+    | '/browse-herbs'
+    | '/contact'
+    | '/faqs'
+    | '/login'
+    | '/nurseries'
+    | '/plant-care'
+    | '/privacy'
+    | '/signup'
+    | '/sitemap.xml'
+    | '/_authenticated/supplier'
+    | '/browse-herbs/$slug'
+    | '/browse-herbs/'
+    | '/_authenticated/supplier/bookings'
+    | '/_authenticated/supplier/herbs'
+    | '/_authenticated/supplier/profile'
+    | '/_authenticated/supplier/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AboutRoute: typeof AboutRoute
+  BecomeASupplierRoute: typeof BecomeASupplierRoute
+  BrowseHerbsRoute: typeof BrowseHerbsRouteWithChildren
+  ContactRoute: typeof ContactRoute
+  FaqsRoute: typeof FaqsRoute
+  LoginRoute: typeof LoginRoute
+  NurseriesRoute: typeof NurseriesRoute
+  PlantCareRoute: typeof PlantCareRoute
+  PrivacyRoute: typeof PrivacyRoute
+  SignupRoute: typeof SignupRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plant-care': {
+      id: '/plant-care'
+      path: '/plant-care'
+      fullPath: '/plant-care'
+      preLoaderRoute: typeof PlantCareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nurseries': {
+      id: '/nurseries'
+      path: '/nurseries'
+      fullPath: '/nurseries'
+      preLoaderRoute: typeof NurseriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faqs': {
+      id: '/faqs'
+      path: '/faqs'
+      fullPath: '/faqs'
+      preLoaderRoute: typeof FaqsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/browse-herbs': {
+      id: '/browse-herbs'
+      path: '/browse-herbs'
+      fullPath: '/browse-herbs'
+      preLoaderRoute: typeof BrowseHerbsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/become-a-supplier': {
+      id: '/become-a-supplier'
+      path: '/become-a-supplier'
+      fullPath: '/become-a-supplier'
+      preLoaderRoute: typeof BecomeASupplierRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +371,116 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/browse-herbs/': {
+      id: '/browse-herbs/'
+      path: '/'
+      fullPath: '/browse-herbs/'
+      preLoaderRoute: typeof BrowseHerbsIndexRouteImport
+      parentRoute: typeof BrowseHerbsRoute
+    }
+    '/browse-herbs/$slug': {
+      id: '/browse-herbs/$slug'
+      path: '/$slug'
+      fullPath: '/browse-herbs/$slug'
+      preLoaderRoute: typeof BrowseHerbsSlugRouteImport
+      parentRoute: typeof BrowseHerbsRoute
+    }
+    '/_authenticated/supplier': {
+      id: '/_authenticated/supplier'
+      path: '/supplier'
+      fullPath: '/supplier'
+      preLoaderRoute: typeof AuthenticatedSupplierRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/supplier/': {
+      id: '/_authenticated/supplier/'
+      path: '/'
+      fullPath: '/supplier/'
+      preLoaderRoute: typeof AuthenticatedSupplierIndexRouteImport
+      parentRoute: typeof AuthenticatedSupplierRoute
+    }
+    '/_authenticated/supplier/profile': {
+      id: '/_authenticated/supplier/profile'
+      path: '/profile'
+      fullPath: '/supplier/profile'
+      preLoaderRoute: typeof AuthenticatedSupplierProfileRouteImport
+      parentRoute: typeof AuthenticatedSupplierRoute
+    }
+    '/_authenticated/supplier/herbs': {
+      id: '/_authenticated/supplier/herbs'
+      path: '/herbs'
+      fullPath: '/supplier/herbs'
+      preLoaderRoute: typeof AuthenticatedSupplierHerbsRouteImport
+      parentRoute: typeof AuthenticatedSupplierRoute
+    }
+    '/_authenticated/supplier/bookings': {
+      id: '/_authenticated/supplier/bookings'
+      path: '/bookings'
+      fullPath: '/supplier/bookings'
+      preLoaderRoute: typeof AuthenticatedSupplierBookingsRouteImport
+      parentRoute: typeof AuthenticatedSupplierRoute
+    }
   }
 }
 
+interface AuthenticatedSupplierRouteChildren {
+  AuthenticatedSupplierBookingsRoute: typeof AuthenticatedSupplierBookingsRoute
+  AuthenticatedSupplierHerbsRoute: typeof AuthenticatedSupplierHerbsRoute
+  AuthenticatedSupplierProfileRoute: typeof AuthenticatedSupplierProfileRoute
+  AuthenticatedSupplierIndexRoute: typeof AuthenticatedSupplierIndexRoute
+}
+
+const AuthenticatedSupplierRouteChildren: AuthenticatedSupplierRouteChildren = {
+  AuthenticatedSupplierBookingsRoute: AuthenticatedSupplierBookingsRoute,
+  AuthenticatedSupplierHerbsRoute: AuthenticatedSupplierHerbsRoute,
+  AuthenticatedSupplierProfileRoute: AuthenticatedSupplierProfileRoute,
+  AuthenticatedSupplierIndexRoute: AuthenticatedSupplierIndexRoute,
+}
+
+const AuthenticatedSupplierRouteWithChildren =
+  AuthenticatedSupplierRoute._addFileChildren(
+    AuthenticatedSupplierRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedSupplierRoute: typeof AuthenticatedSupplierRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedSupplierRoute: AuthenticatedSupplierRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
+interface BrowseHerbsRouteChildren {
+  BrowseHerbsSlugRoute: typeof BrowseHerbsSlugRoute
+  BrowseHerbsIndexRoute: typeof BrowseHerbsIndexRoute
+}
+
+const BrowseHerbsRouteChildren: BrowseHerbsRouteChildren = {
+  BrowseHerbsSlugRoute: BrowseHerbsSlugRoute,
+  BrowseHerbsIndexRoute: BrowseHerbsIndexRoute,
+}
+
+const BrowseHerbsRouteWithChildren = BrowseHerbsRoute._addFileChildren(
+  BrowseHerbsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AboutRoute: AboutRoute,
+  BecomeASupplierRoute: BecomeASupplierRoute,
+  BrowseHerbsRoute: BrowseHerbsRouteWithChildren,
+  ContactRoute: ContactRoute,
+  FaqsRoute: FaqsRoute,
+  LoginRoute: LoginRoute,
+  NurseriesRoute: NurseriesRoute,
+  PlantCareRoute: PlantCareRoute,
+  PrivacyRoute: PrivacyRoute,
+  SignupRoute: SignupRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

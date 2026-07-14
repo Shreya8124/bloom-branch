@@ -8,9 +8,12 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { SiteChrome } from "../components/site/SiteChrome";
+import { Toaster } from "../components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -77,21 +80,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "KitchenBloom — Fresh kitchen herbs from nurseries near you" },
+      { name: "description", content: "Browse kitchen herb plants at trusted local nurseries, reserve your pickup slot, and grow fresh ingredients at home. No online payments." },
+      { name: "author", content: "KitchenBloom" },
+      { property: "og:title", content: "KitchenBloom — Fresh kitchen herbs from nurseries near you" },
+      { property: "og:description", content: "Browse kitchen herb plants at trusted local nurseries, reserve your pickup slot, and grow fresh ingredients at home. No online payments." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "theme-color", content: "#3f7d4d" },
+      { name: "twitter:title", content: "KitchenBloom — Fresh kitchen herbs from nurseries near you" },
+      { name: "twitter:description", content: "Browse kitchen herb plants at trusted local nurseries, reserve your pickup slot, and grow fresh ingredients at home. No online payments." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f3a1b4b9-2c22-4b30-b8c0-9ded6cb2e7d5/id-preview-b9ed1082--231dde63-1787-4b91-b5b3-ac155965ede6.lovable.app-1783921137668.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f3a1b4b9-2c22-4b30-b8c0-9ded6cb2e7d5/id-preview-b9ed1082--231dde63-1787-4b91-b5b3-ac155965ede6.lovable.app-1783921137668.png" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" },
     ],
   }),
   shellComponent: RootShell,
@@ -116,11 +125,21 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useEffect(() => {
+    const { data: sub } = supabase.auth.onAuthStateChange((e) => {
+      if (e === "SIGNED_IN" || e === "SIGNED_OUT" || e === "USER_UPDATED") {
+        queryClient.invalidateQueries();
+      }
+    });
+    return () => sub.subscription.unsubscribe();
+  }, [queryClient]);
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <SiteChrome>
+        <Outlet />
+      </SiteChrome>
+      <Toaster richColors position="top-center" />
     </QueryClientProvider>
   );
 }
