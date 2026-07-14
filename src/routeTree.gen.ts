@@ -20,9 +20,15 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BrowseHerbsRouteImport } from './routes/browse-herbs'
 import { Route as BecomeASupplierRouteImport } from './routes/become-a-supplier'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BrowseHerbsIndexRouteImport } from './routes/browse-herbs.index'
 import { Route as BrowseHerbsSlugRouteImport } from './routes/browse-herbs.$slug'
+import { Route as AuthenticatedSupplierRouteImport } from './routes/_authenticated/supplier'
+import { Route as AuthenticatedSupplierIndexRouteImport } from './routes/_authenticated/supplier.index'
+import { Route as AuthenticatedSupplierProfileRouteImport } from './routes/_authenticated/supplier.profile'
+import { Route as AuthenticatedSupplierHerbsRouteImport } from './routes/_authenticated/supplier.herbs'
+import { Route as AuthenticatedSupplierBookingsRouteImport } from './routes/_authenticated/supplier.bookings'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -79,6 +85,10 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -94,6 +104,35 @@ const BrowseHerbsSlugRoute = BrowseHerbsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => BrowseHerbsRoute,
 } as any)
+const AuthenticatedSupplierRoute = AuthenticatedSupplierRouteImport.update({
+  id: '/supplier',
+  path: '/supplier',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSupplierIndexRoute =
+  AuthenticatedSupplierIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedSupplierRoute,
+  } as any)
+const AuthenticatedSupplierProfileRoute =
+  AuthenticatedSupplierProfileRouteImport.update({
+    id: '/profile',
+    path: '/profile',
+    getParentRoute: () => AuthenticatedSupplierRoute,
+  } as any)
+const AuthenticatedSupplierHerbsRoute =
+  AuthenticatedSupplierHerbsRouteImport.update({
+    id: '/herbs',
+    path: '/herbs',
+    getParentRoute: () => AuthenticatedSupplierRoute,
+  } as any)
+const AuthenticatedSupplierBookingsRoute =
+  AuthenticatedSupplierBookingsRouteImport.update({
+    id: '/bookings',
+    path: '/bookings',
+    getParentRoute: () => AuthenticatedSupplierRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -108,8 +147,13 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/supplier': typeof AuthenticatedSupplierRouteWithChildren
   '/browse-herbs/$slug': typeof BrowseHerbsSlugRoute
   '/browse-herbs/': typeof BrowseHerbsIndexRoute
+  '/supplier/bookings': typeof AuthenticatedSupplierBookingsRoute
+  '/supplier/herbs': typeof AuthenticatedSupplierHerbsRoute
+  '/supplier/profile': typeof AuthenticatedSupplierProfileRoute
+  '/supplier/': typeof AuthenticatedSupplierIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -125,10 +169,15 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/browse-herbs/$slug': typeof BrowseHerbsSlugRoute
   '/browse-herbs': typeof BrowseHerbsIndexRoute
+  '/supplier/bookings': typeof AuthenticatedSupplierBookingsRoute
+  '/supplier/herbs': typeof AuthenticatedSupplierHerbsRoute
+  '/supplier/profile': typeof AuthenticatedSupplierProfileRoute
+  '/supplier': typeof AuthenticatedSupplierIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/become-a-supplier': typeof BecomeASupplierRoute
   '/browse-herbs': typeof BrowseHerbsRouteWithChildren
@@ -140,8 +189,13 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/_authenticated/supplier': typeof AuthenticatedSupplierRouteWithChildren
   '/browse-herbs/$slug': typeof BrowseHerbsSlugRoute
   '/browse-herbs/': typeof BrowseHerbsIndexRoute
+  '/_authenticated/supplier/bookings': typeof AuthenticatedSupplierBookingsRoute
+  '/_authenticated/supplier/herbs': typeof AuthenticatedSupplierHerbsRoute
+  '/_authenticated/supplier/profile': typeof AuthenticatedSupplierProfileRoute
+  '/_authenticated/supplier/': typeof AuthenticatedSupplierIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -158,8 +212,13 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/signup'
     | '/sitemap.xml'
+    | '/supplier'
     | '/browse-herbs/$slug'
     | '/browse-herbs/'
+    | '/supplier/bookings'
+    | '/supplier/herbs'
+    | '/supplier/profile'
+    | '/supplier/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -175,9 +234,14 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/browse-herbs/$slug'
     | '/browse-herbs'
+    | '/supplier/bookings'
+    | '/supplier/herbs'
+    | '/supplier/profile'
+    | '/supplier'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
     | '/become-a-supplier'
     | '/browse-herbs'
@@ -189,12 +253,18 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/signup'
     | '/sitemap.xml'
+    | '/_authenticated/supplier'
     | '/browse-herbs/$slug'
     | '/browse-herbs/'
+    | '/_authenticated/supplier/bookings'
+    | '/_authenticated/supplier/herbs'
+    | '/_authenticated/supplier/profile'
+    | '/_authenticated/supplier/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   BecomeASupplierRoute: typeof BecomeASupplierRoute
   BrowseHerbsRoute: typeof BrowseHerbsRouteWithChildren
@@ -287,6 +357,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -308,8 +385,73 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrowseHerbsSlugRouteImport
       parentRoute: typeof BrowseHerbsRoute
     }
+    '/_authenticated/supplier': {
+      id: '/_authenticated/supplier'
+      path: '/supplier'
+      fullPath: '/supplier'
+      preLoaderRoute: typeof AuthenticatedSupplierRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/supplier/': {
+      id: '/_authenticated/supplier/'
+      path: '/'
+      fullPath: '/supplier/'
+      preLoaderRoute: typeof AuthenticatedSupplierIndexRouteImport
+      parentRoute: typeof AuthenticatedSupplierRoute
+    }
+    '/_authenticated/supplier/profile': {
+      id: '/_authenticated/supplier/profile'
+      path: '/profile'
+      fullPath: '/supplier/profile'
+      preLoaderRoute: typeof AuthenticatedSupplierProfileRouteImport
+      parentRoute: typeof AuthenticatedSupplierRoute
+    }
+    '/_authenticated/supplier/herbs': {
+      id: '/_authenticated/supplier/herbs'
+      path: '/herbs'
+      fullPath: '/supplier/herbs'
+      preLoaderRoute: typeof AuthenticatedSupplierHerbsRouteImport
+      parentRoute: typeof AuthenticatedSupplierRoute
+    }
+    '/_authenticated/supplier/bookings': {
+      id: '/_authenticated/supplier/bookings'
+      path: '/bookings'
+      fullPath: '/supplier/bookings'
+      preLoaderRoute: typeof AuthenticatedSupplierBookingsRouteImport
+      parentRoute: typeof AuthenticatedSupplierRoute
+    }
   }
 }
+
+interface AuthenticatedSupplierRouteChildren {
+  AuthenticatedSupplierBookingsRoute: typeof AuthenticatedSupplierBookingsRoute
+  AuthenticatedSupplierHerbsRoute: typeof AuthenticatedSupplierHerbsRoute
+  AuthenticatedSupplierProfileRoute: typeof AuthenticatedSupplierProfileRoute
+  AuthenticatedSupplierIndexRoute: typeof AuthenticatedSupplierIndexRoute
+}
+
+const AuthenticatedSupplierRouteChildren: AuthenticatedSupplierRouteChildren = {
+  AuthenticatedSupplierBookingsRoute: AuthenticatedSupplierBookingsRoute,
+  AuthenticatedSupplierHerbsRoute: AuthenticatedSupplierHerbsRoute,
+  AuthenticatedSupplierProfileRoute: AuthenticatedSupplierProfileRoute,
+  AuthenticatedSupplierIndexRoute: AuthenticatedSupplierIndexRoute,
+}
+
+const AuthenticatedSupplierRouteWithChildren =
+  AuthenticatedSupplierRoute._addFileChildren(
+    AuthenticatedSupplierRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedSupplierRoute: typeof AuthenticatedSupplierRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedSupplierRoute: AuthenticatedSupplierRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface BrowseHerbsRouteChildren {
   BrowseHerbsSlugRoute: typeof BrowseHerbsSlugRoute
@@ -327,6 +469,7 @@ const BrowseHerbsRouteWithChildren = BrowseHerbsRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   BecomeASupplierRoute: BecomeASupplierRoute,
   BrowseHerbsRoute: BrowseHerbsRouteWithChildren,
