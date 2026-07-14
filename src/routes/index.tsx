@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { ArrowRight, Calendar, Heart, MapPin, Sprout, ShoppingBag, Search, Package, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HerbCard } from "@/components/site/HerbCard";
-import heroAsset from "@/assets/parijaat-nursery-gate.jpg.asset.json";
+import heroAsset from "@/assets/parijaat-nursery-gate-2.jpg.asset.json";
 const heroImg = heroAsset.url;
 import flatlay from "@/assets/herbs-flatlay.jpg";
 import { growers } from "@/data/mock";
