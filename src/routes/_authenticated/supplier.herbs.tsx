@@ -41,7 +41,7 @@ function MyHerbs() {
   if (!supplier || !user) return <p className="text-sm text-muted-foreground">Loading…</p>;
 
   const openNew = () => { setForm({ ...blank }); setOpen(true); };
-  const openEdit = (h: Herb) => setForm({ id: h.id, slug: h.slug, name: h.name, local: h.local ?? "", price: h.price, availability: h.availability, stock: h.stock, description: h.description, image_url: h.image_url }) || setOpen(true);
+  const openEdit = (h: Herb) => { setForm({ id: h.id, slug: h.slug, name: h.name, local: h.local ?? "", price: h.price, availability: h.availability, stock: h.stock, description: h.description, image_url: h.image_url }); setOpen(true); };
 
   const del = async (h: Herb) => {
     if (!confirm(`Delete ${h.name}?`)) return;
