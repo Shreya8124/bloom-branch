@@ -6,13 +6,20 @@ import { Button } from "@/components/ui/button";
 import { HerbCard } from "@/components/site/HerbCard";
 import heroImg from "@/assets/hero-herbs.jpg";
 import flatlay from "@/assets/herbs-flatlay.jpg";
-import { herbs, growers } from "@/data/mock";
+import { growers } from "@/data/mock";
+import { useEffect, useState } from "react";
+import { fetchHerbs, fetchSuppliers } from "@/lib/queries";
+import type { Herb, Supplier } from "@/lib/types";
 
 export const Route = createFileRoute("/")({
   component: Home,
 });
 
 function Home() {
+  const [herbs, setHerbs] = useState<Herb[]>([]);
+  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
+  useEffect(() => { Promise.all([fetchHerbs(), fetchSuppliers()]).then(([h, s]) => { setHerbs(h); setSuppliers(s); }); }, []);
+  const supplierById = new Map(suppliers.map((s) => [s.id, s]));
   return (
     <>
       {/* Hero */}
@@ -86,7 +93,7 @@ function Home() {
           </Button>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {herbs.slice(0, 8).map((h, i) => <HerbCard key={h.slug} herb={h} index={i} />)}
+          {herbs.slice(0, 8).map((h, i) => <HerbCard key={h.id} herb={h} supplier={supplierById.get(h.supplier_id)} index={i} />)}
         </div>
       </section>
 
