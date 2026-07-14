@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SupplierRouteImport } from './routes/supplier'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -22,18 +21,9 @@ import { Route as BrowseHerbsRouteImport } from './routes/browse-herbs'
 import { Route as BecomeASupplierRouteImport } from './routes/become-a-supplier'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SupplierIndexRouteImport } from './routes/supplier.index'
 import { Route as BrowseHerbsIndexRouteImport } from './routes/browse-herbs.index'
-import { Route as SupplierProfileRouteImport } from './routes/supplier.profile'
-import { Route as SupplierHerbsRouteImport } from './routes/supplier.herbs'
-import { Route as SupplierBookingsRouteImport } from './routes/supplier.bookings'
 import { Route as BrowseHerbsSlugRouteImport } from './routes/browse-herbs.$slug'
 
-const SupplierRoute = SupplierRouteImport.update({
-  id: '/supplier',
-  path: '/supplier',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -94,30 +84,10 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SupplierIndexRoute = SupplierIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => SupplierRoute,
-} as any)
 const BrowseHerbsIndexRoute = BrowseHerbsIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => BrowseHerbsRoute,
-} as any)
-const SupplierProfileRoute = SupplierProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => SupplierRoute,
-} as any)
-const SupplierHerbsRoute = SupplierHerbsRouteImport.update({
-  id: '/herbs',
-  path: '/herbs',
-  getParentRoute: () => SupplierRoute,
-} as any)
-const SupplierBookingsRoute = SupplierBookingsRouteImport.update({
-  id: '/bookings',
-  path: '/bookings',
-  getParentRoute: () => SupplierRoute,
 } as any)
 const BrowseHerbsSlugRoute = BrowseHerbsSlugRouteImport.update({
   id: '/$slug',
@@ -138,13 +108,8 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/supplier': typeof SupplierRouteWithChildren
   '/browse-herbs/$slug': typeof BrowseHerbsSlugRoute
-  '/supplier/bookings': typeof SupplierBookingsRoute
-  '/supplier/herbs': typeof SupplierHerbsRoute
-  '/supplier/profile': typeof SupplierProfileRoute
   '/browse-herbs/': typeof BrowseHerbsIndexRoute
-  '/supplier/': typeof SupplierIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -159,11 +124,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/browse-herbs/$slug': typeof BrowseHerbsSlugRoute
-  '/supplier/bookings': typeof SupplierBookingsRoute
-  '/supplier/herbs': typeof SupplierHerbsRoute
-  '/supplier/profile': typeof SupplierProfileRoute
   '/browse-herbs': typeof BrowseHerbsIndexRoute
-  '/supplier': typeof SupplierIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -179,13 +140,8 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/supplier': typeof SupplierRouteWithChildren
   '/browse-herbs/$slug': typeof BrowseHerbsSlugRoute
-  '/supplier/bookings': typeof SupplierBookingsRoute
-  '/supplier/herbs': typeof SupplierHerbsRoute
-  '/supplier/profile': typeof SupplierProfileRoute
   '/browse-herbs/': typeof BrowseHerbsIndexRoute
-  '/supplier/': typeof SupplierIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -202,13 +158,8 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/signup'
     | '/sitemap.xml'
-    | '/supplier'
     | '/browse-herbs/$slug'
-    | '/supplier/bookings'
-    | '/supplier/herbs'
-    | '/supplier/profile'
     | '/browse-herbs/'
-    | '/supplier/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -223,11 +174,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/sitemap.xml'
     | '/browse-herbs/$slug'
-    | '/supplier/bookings'
-    | '/supplier/herbs'
-    | '/supplier/profile'
     | '/browse-herbs'
-    | '/supplier'
   id:
     | '__root__'
     | '/'
@@ -242,13 +189,8 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/signup'
     | '/sitemap.xml'
-    | '/supplier'
     | '/browse-herbs/$slug'
-    | '/supplier/bookings'
-    | '/supplier/herbs'
-    | '/supplier/profile'
     | '/browse-herbs/'
-    | '/supplier/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -264,18 +206,10 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   SignupRoute: typeof SignupRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  SupplierRoute: typeof SupplierRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/supplier': {
-      id: '/supplier'
-      path: '/supplier'
-      fullPath: '/supplier'
-      preLoaderRoute: typeof SupplierRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -360,40 +294,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/supplier/': {
-      id: '/supplier/'
-      path: '/'
-      fullPath: '/supplier/'
-      preLoaderRoute: typeof SupplierIndexRouteImport
-      parentRoute: typeof SupplierRoute
-    }
     '/browse-herbs/': {
       id: '/browse-herbs/'
       path: '/'
       fullPath: '/browse-herbs/'
       preLoaderRoute: typeof BrowseHerbsIndexRouteImport
       parentRoute: typeof BrowseHerbsRoute
-    }
-    '/supplier/profile': {
-      id: '/supplier/profile'
-      path: '/profile'
-      fullPath: '/supplier/profile'
-      preLoaderRoute: typeof SupplierProfileRouteImport
-      parentRoute: typeof SupplierRoute
-    }
-    '/supplier/herbs': {
-      id: '/supplier/herbs'
-      path: '/herbs'
-      fullPath: '/supplier/herbs'
-      preLoaderRoute: typeof SupplierHerbsRouteImport
-      parentRoute: typeof SupplierRoute
-    }
-    '/supplier/bookings': {
-      id: '/supplier/bookings'
-      path: '/bookings'
-      fullPath: '/supplier/bookings'
-      preLoaderRoute: typeof SupplierBookingsRouteImport
-      parentRoute: typeof SupplierRoute
     }
     '/browse-herbs/$slug': {
       id: '/browse-herbs/$slug'
@@ -419,24 +325,6 @@ const BrowseHerbsRouteWithChildren = BrowseHerbsRoute._addFileChildren(
   BrowseHerbsRouteChildren,
 )
 
-interface SupplierRouteChildren {
-  SupplierBookingsRoute: typeof SupplierBookingsRoute
-  SupplierHerbsRoute: typeof SupplierHerbsRoute
-  SupplierProfileRoute: typeof SupplierProfileRoute
-  SupplierIndexRoute: typeof SupplierIndexRoute
-}
-
-const SupplierRouteChildren: SupplierRouteChildren = {
-  SupplierBookingsRoute: SupplierBookingsRoute,
-  SupplierHerbsRoute: SupplierHerbsRoute,
-  SupplierProfileRoute: SupplierProfileRoute,
-  SupplierIndexRoute: SupplierIndexRoute,
-}
-
-const SupplierRouteWithChildren = SupplierRoute._addFileChildren(
-  SupplierRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -450,7 +338,6 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   SignupRoute: SignupRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  SupplierRoute: SupplierRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
