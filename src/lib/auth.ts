@@ -1,39 +1,41 @@
 import { useEffect, useState } from "react";
+import type { Session, User } from "@supabase/supabase-js";
+import { supabase } from "@/integrations/supabase/client";
+import { fetchSupplierByUserId } from "./queries";
+import type { Supplier } from "./types";
 
-const KEY = "kb_auth";
-
-export type StoredUser = {
-  role: "customer" | "supplier";
-  email: string;
-  name: string;
-  nursery?: string;
+export type AuthState = {
+  loading: boolean;
+  user: User | null;
+  session: Session | null;
+  supplier: Supplier | null;
 };
 
-export function getUser(): StoredUser | null {
-  if (typeof window === "undefined") return null;
-  try { return JSON.parse(localStorage.getItem(KEY) || "null"); } catch { return null; }
-}
+export function useAuth(): AuthState {
+  const [state, setState] = useState<AuthState>({ loading: true, user: null, session: null, supplier: null });
 
-export function setUser(u: StoredUser | null) {
-  if (typeof window === "undefined") return;
-  if (u) localStorage.setItem(KEY, JSON.stringify(u));
-  else localStorage.removeItem(KEY);
-  window.dispatchEvent(new Event("kb-auth"));
-}
-
-export function useUser(): StoredUser | null {
-  const [u, setU] = useState<StoredUser | null>(null);
   useEffect(() => {
-    setU(getUser());
-    const h = () => setU(getUser());
-    window.addEventListener("kb-auth", h);
-    window.addEventListener("storage", h);
-    return () => {
-      window.removeEventListener("kb-auth", h);
-      window.removeEventListener("storage", h);
-    };
+    let alive = true;
+    async function load(session: Session | null) {
+      if (!alive) return;
+      const user = session?.user ?? null;
+      let supplier: Supplier | null = null;
+      if (user) {
+        try { supplier = await fetchSupplierByUserId(user.id); } catch { supplier = null; }
+      }
+      if (!alive) return;
+      setState({ loading: false, user, session, supplier });
+    }
+    supabase.auth.getSession().then(({ data }) => load(data.session));
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => { load(session); });
+    return () => { alive = false; sub.subscription.unsubscribe(); };
   }, []);
-  return u;
+
+  return state;
+}
+
+export async function signOut() {
+  await supabase.auth.signOut();
 }
 
 export function useHydrated() {
